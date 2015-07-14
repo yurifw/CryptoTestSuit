@@ -53,7 +53,7 @@ directory = args.directory
 total = 0
 directories = read_directory(directory)
 for path in directories:
-    block_sizes=[4, 6, 8]
+    block_sizes=[4, 8, 16,]
     for size in block_sizes:
         total+=count_pattern(read_file(directory+os.sep+path), size)
 print total

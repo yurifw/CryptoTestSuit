@@ -2,7 +2,7 @@
 import itertools
 
 
-s_box = ((0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76),
+s_box = s_box = ((0x63, 0x7C, 0x77, 0x7B, 0xF2, 0x6B, 0x6F, 0xC5, 0x30, 0x01, 0x67, 0x2B, 0xFE, 0xD7, 0xAB, 0x76),
 (0xCA, 0x82, 0xC9, 0x7D, 0xFA, 0x59, 0x47, 0xF0, 0xAD, 0xD4, 0xA2, 0xAF, 0x9C, 0xA4, 0x72, 0xC0),
 (0xB7, 0xFD, 0x93, 0x26, 0x36, 0x3F, 0xF7, 0xCC, 0x34, 0xA5, 0xE5, 0xF1, 0x71, 0xD8, 0x31, 0x15),
 (0x04, 0xC7, 0x23, 0xC3, 0x18, 0x96, 0x05, 0x9A, 0x07, 0x12, 0x80, 0xE2, 0xEB, 0x27, 0xB2, 0x75),
@@ -25,7 +25,7 @@ output_size = 8
 
 
 def subbytes(byte):
-    # definir aqui o funcionamento da sbox
+    # definir aqui a sbox
     col = byte >> 4
     row = byte & 15
     return s_box[row][col]
@@ -52,6 +52,7 @@ def print_funcoes_lineares(n):
             funcoes += aux %c +"\n"
             funcoes += aux %c + "+1\n"
     print funcoes.replace(" x", " + x")
+    # melhorias: colocar o index de cada saida, por exemplo f1 =  saida, f2 = saida
 
 
 def sbox_truth_table(verbose):
@@ -82,6 +83,9 @@ def tt_vetores_lineares(n, verbose):
     truth_table = [[0 for col in range(2**(n+1))] for row in range(2**n)]  # iniciando a tabela com 0
     r = 0
     def funcao(array, indices):
+        """esta funcao tem que receber como parametro um array de booleanos (1 ou 0) e um
+        array que diga quais indices serao considerados. a funcao deve fazer um ou exclusivo com todos os indices considerados
+        e retornar o resultado (ou 0 ou 1) """
         result = 0
         for i in indices:
             result ^= array[i-1]  # -1 pq o metodo combinacoes retorna sequencias que comecam do 1 ao inves do 0
@@ -95,7 +99,7 @@ def tt_vetores_lineares(n, verbose):
         truth_table[lin].append(1)          # adicionando linha referente a funcao 2, que tem como todas as saidas 1
         for i in range(entry_size):
             for c in combinacoes(entry_size, i+1):   # +1 para executar uma iteracao com todas as variaveis
-                r = funcao(truth_table[lin], c)    
+                r = funcao(truth_table[lin], c)
                 truth_table[lin].append(r)
                 truth_table[lin].append(r ^ 1)
 
@@ -165,11 +169,9 @@ def nonlinearity(verbose):
         for j in range(len(vetores_lineares)):
             a = hamming_distance(vetores_verdade[i], vetores_lineares[j])
             if a < result : result = a
+            
 
-
-    print "\nNaolinearidade: %i" %result
-
+    print "\nNao linearidade: %i" %result
 
 nonlinearity(True)
-
-
+# print bitfield(subbytes(13),output_size)

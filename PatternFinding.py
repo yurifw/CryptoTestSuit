@@ -44,7 +44,7 @@ def count_pattern(string, block_size): #may be optimized
 
 
 
-parser = argparse.ArgumentParser(description="Recebe como parametro um diretorio, o script pega cada arquivo de texto neste diretorio e transfotma em uma string, cada string e dividida em blocos de 4, 6 e 8 caracteres. Depois o script conta a ocorrencia de repeticoes deste bloco na string que foi dividida. Isto e feito para cada arquivo com extensao txt no diretorio, o resultado final e a soma de repeticoes")
+parser = argparse.ArgumentParser(description="Recebe como parametro um diretorio, o script pega cada arquivo de texto neste diretorio e transfotma em uma string, cada string e dividida em blocos de 4, 8 e 16 caracteres. Depois o script conta a ocorrencia de repeticoes deste bloco na string que foi dividida. Isto e feito para cada arquivo com extensao txt no diretorio, o resultado final e a soma de repeticoes")
 parser.add_argument('-d','--directory', help='diretorio contendo os arquivos',required=True)
 args = parser.parse_args()
 

@@ -38,10 +38,10 @@ def test():
         Y = [] * (output_size+1) # Y[0] eh a saida da funcao recebendo x[0] como entrada e por ai vai
         V = [] * output_size
 
-        #X.append( to_bit_array ([random.randint(0,255) for r in xrange(input_size/8)])) #gerou uma sequencia de bits aleatoria, do tamanho da entrada, X[0] e a entrada padrao que sera testada
-        array = [] #se quiser gerar aleatoriamente, apagar esta linha e descomentar a linha acima
-        array.append(i)   #se quiser gerar aleatoriamente, apagar esta linha tb
-        X.append( to_bit_array (array))  #se quiser gerar aleatoriamente, apagar esta linha tb
+        X.append( to_bit_array ([random.randint(0,255) for r in xrange(input_size/8)])) #gerou uma sequencia de bits aleatoria, do tamanho da entrada, X[0] e a entrada padrao que sera testada
+        #array = [] #se quiser gerar aleatoriamente, apagar esta linha e descomentar a linha acima
+        #array.append(i)   #se quiser gerar aleatoriamente, apagar esta linha tb
+        #X.append( to_bit_array (array))  #se quiser gerar aleatoriamente, apagar esta linha tb
         Y.append(funcao_testada(X[0]))
 
         for j in range(input_size):
@@ -50,7 +50,7 @@ def test():
             Y.append(funcao_testada(X[j+1]))#Y[i+1] = funcao_testada(X[i+1])
             V.append(xor(Y[0], Y[j+1]))
 
-        print "\n"
+        #print "\n"
         for i in range(len(V)):
             for j in range(len(V[0])):
                 if V[i][j] == 1: qtd_1 += 1
@@ -67,6 +67,14 @@ def to_bit_array(array):
     for i in range(len(array)):
         result.extend(bitfield(array[i], 8))
     return result
+
+def bit_array_2_decimal(bitarray):
+    array = [0] * (len(bitarray)/8)
+
+    for i in range(0,len(bitarray),8):
+        decimal = pow(2,7)*bitarray[i] + pow(2,6)*bitarray[i+1] + pow(2,5)*bitarray[i+2] + pow(2,4)*bitarray[i+3] + pow(2,3)*bitarray[i+4] + pow(2,2)*bitarray[i+5]  + pow(2,1)*bitarray[i+6] + pow(2,0)*bitarray[i+7]
+        array[i/8] = decimal
+    return array
 
 def xor(a, b):
     if len(a) != len(b): raise IndexError

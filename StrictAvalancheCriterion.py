@@ -4,7 +4,7 @@ import random
 
 input_size = 8 #em bits
 output_size = 8 #em bits
-sample_size = 256  # tamanho maximo = 2 ^ input_size
+sample_size = pow(2,8)  # tamanho maximo = 2 ^ input_size
 
 def funcao_testada(plain_text):
     """Esta funcao deve receber como entrada um bit array e deve ter como saida um bit array, utilize a funcao to_bit_array para implementar mais facilmente"""
@@ -38,10 +38,10 @@ def test():
         Y = [] * (output_size+1) # Y[0] eh a saida da funcao recebendo x[0] como entrada e por ai vai
         V = [] * output_size
 
-        X.append( to_bit_array ([random.randint(0,255) for r in xrange(input_size/8)])) #gerou uma sequencia de bits aleatoria, do tamanho da entrada, X[0] e a entrada padrao que sera testada
-        #array = [] #se quiser gerar aleatoriamente, apagar esta linha e descomentar a linha acima
-        #array.append(i)   #se quiser gerar aleatoriamente, apagar esta linha tb
-        #X.append( to_bit_array (array))  #se quiser gerar aleatoriamente, apagar esta linha tb
+        #X.append( to_bit_array ([random.randint(0,255) for r in xrange(input_size/8)])) #gerou uma sequencia de bits aleatoria, do tamanho da entrada, X[0] e a entrada padrao que sera testada
+        array = [] #se quiser gerar aleatoriamente, apagar esta linha e descomentar a linha acima
+        array.append(i)   #se quiser gerar aleatoriamente, apagar esta linha tb
+        X.append( to_bit_array (array))  #se quiser gerar aleatoriamente, apagar esta linha tb
         Y.append(funcao_testada(X[0]))
 
         for j in range(input_size):
@@ -82,6 +82,5 @@ def xor(a, b):
     for i in range(len(a)):
         result[i] = a[i] ^ b[i]
     return result
-
 
 test()
